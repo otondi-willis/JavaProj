@@ -7,29 +7,16 @@ public class Main {
         double[] rightVals = {50.0d, 92.0d, 17.0d, 3.0d};
         char[] opCodes = {'a','s','m','d'};
         double[] results= new double[opCodes.length];
+        double executeResult;
 
+
+
+
+        if (args.length == 0){
         for (int i = 0; i < opCodes.length; i++) {
-            switch (opCodes[i]){
-                case 'a':
-                    results[i] = leftVals[i] + rightVals[i];
-                    break;
-                case 's':
-                    results[i] = leftVals[i] - rightVals[i];
-                    break;
-                case 'm':
-                    results[i] = leftVals[i] * rightVals[i];
-                    break;
-                case 'd':
-                    results[i] = rightVals[i] != 0 ? leftVals[i]/rightVals[i]: 0.00d;
 
-                    break;
-                default:
-                    System.out.println("Invalid opCode: " + opCodes[i]);
-                    results[i] = 0.00d;
+             results[i] = execute(opCodes[i],leftVals[i],rightVals[i]);
 
-                    break;
-
-            }
         }
 
         for ( double currentResult : results)
@@ -37,8 +24,42 @@ public class Main {
         System.out.println(currentResult);
 
 
+    } else if(args.length == 3){
+            handleCommandLine(args);
+        }
+        else
+            System.out.println("Please provide an operation code and 2 numeric values");
+    }
 
+    private static void handleCommandLine(String[] args) {
+        char opCode = args[0].charAt(0);
+        double leftVal = Double.parseDouble(args[1]);
+        double rightVal = Double.parseDouble(args[2]);
+        double result = execute(opCode, leftVal, rightVal);
+        System.out.println(result);
+    }
 
+    static double execute(char opCode, double leftVal, double rightVal){
+        double result;
+        switch (opCode){
+            case 'a':
+                result = leftVal + rightVal;
+                break;
+            case 's':
+                result = leftVal - rightVal;
+                break;
+            case 'm':
+                result = leftVal * rightVal;
+                break;
+            case 'd':
+                result = rightVal != 0 ? leftVal/rightVal: 0.00d;
 
+                break;
+            default:
+                System.out.println("Invalid opCode: " + opCode);
+                result = 0.00d;
+
+                break;}
+        return result;
     }
 }
